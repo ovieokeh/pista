@@ -1,19 +1,18 @@
 import express from 'express';
 import { UserService } from '../services';
-import { SignupValidator } from './validators/signupValidator';
-import { LoginValidator } from './validators/loginValidator';
-import { auth, respond } from '../helpers';
+import { AddBudgetValidator } from './validators/addBudgetValidator';
+import { validateUUID } from './validators/uuidValidator';
+import { respond } from '../helpers';
 
-export class UserValidations {
-  static async signupValidations(
+export class BudgetValidations {
+  static async addBudgetValidations(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ): Promise<void> {
-    SignupValidator.firstName(req);
-    SignupValidator.lastName(req);
-    SignupValidator.email(req);
-    SignupValidator.password(req);
+    AddBudgetValidator.amount(req);
+    AddBudgetValidator.startDate(req);
+    AddBudgetValidator.endDate(req);
 
     const requestErrors = req.validationErrors(true);
     if (requestErrors) {
@@ -21,23 +20,21 @@ export class UserValidations {
       return;
     }
 
-    const user = await UserService.getByEmail(req.body.email);
-    if (user) {
-      respond(res, 'error', 409, 'email already in use');
+    const user = await UserService.getByEmail(req.user.email);
+    if (user.hasPendingBudget) {
+      respond(res, 'error', 409, 'you already have a pending budget');
       return;
     }
 
-    req.body.password = auth.hashPassword(req.body.password);
     next();
   }
 
-  static async loginValidations(
+  static async viewBudgetValidations(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ): Promise<void> {
-    LoginValidator.email(req);
-    LoginValidator.password(req);
+    validateUUID('budgetId', req);
 
     const requestErrors = req.validationErrors(true);
     if (requestErrors) {

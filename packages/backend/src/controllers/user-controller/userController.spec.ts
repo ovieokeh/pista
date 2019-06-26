@@ -2,8 +2,8 @@ import 'mocha';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import expect from 'expect.js';
-import { UserModel } from '../../database/models/UserModel';
 import server from '../../server';
+import { removeUser } from '../../test-helpers';
 chai.use(chaiHttp);
 
 describe('User', () => {
@@ -92,7 +92,7 @@ describe('User', () => {
 
   describe('Login - POST /login', () => {
     after('user table cleanup', () => {
-      UserModel.destroy({ where: { email: dummyUser.email } });
+      removeUser(dummyUser.email);
     });
 
     describe('Validations', () => {
@@ -103,7 +103,7 @@ describe('User', () => {
           .send()
           .end((_, res) => {
             expect(res.status).to.be(422);
-            expect(res.body.message).to.be('login unsuccessful');
+            expect(res.body.message).to.be('validation error');
             expect(res.body.data.email.msg).to.be('email field is required');
             expect(res.body.data.password.msg).to.be(
               'password field is required'
@@ -122,7 +122,7 @@ describe('User', () => {
           })
           .end((_, res) => {
             expect(res.status).to.be(422);
-            expect(res.body.message).to.be('login unsuccessful');
+            expect(res.body.message).to.be('validation error');
             expect(res.body.data.email.msg).to.be('email address is invalid');
             done();
           });

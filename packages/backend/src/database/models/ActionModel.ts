@@ -1,8 +1,7 @@
 import { Model, DataTypes, BuildOptions } from 'sequelize';
 import sequelize from './index';
-import BudgetModel from './BudgetModel';
 
-interface iActionModel extends Model {
+export interface iAction {
   id: string;
   userId: string;
   budgetId: string;
@@ -12,11 +11,15 @@ interface iActionModel extends Model {
   createdAt: string;
 }
 
+interface iActionModel extends iAction, Model {
+  dataValues: any;
+}
+
 type ActionModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): iActionModel;
 };
 
-const ActionModel = <ActionModelStatic>sequelize.define(
+export const ActionModel = <ActionModelStatic>sequelize.define(
   'Action',
   {
     id: {
@@ -58,8 +61,7 @@ const ActionModel = <ActionModelStatic>sequelize.define(
   {
     underscored: true,
     freezeTableName: true,
-    tableName: 'action'
+    tableName: 'action',
+    updatedAt: false
   }
 );
-
-export default ActionModel;

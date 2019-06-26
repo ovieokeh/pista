@@ -1,4 +1,5 @@
 import { UserModel, iUser } from '../database/models/UserModel';
+import { BudgetModel, iBudget } from '../database/models/BudgetModel';
 import { auth } from '../helpers';
 
 export interface NewUserDetails {

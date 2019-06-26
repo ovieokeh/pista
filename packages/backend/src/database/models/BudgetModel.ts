@@ -1,20 +1,25 @@
 import { Model, DataTypes, BuildOptions } from 'sequelize';
 import sequelize from './index';
 
-interface iBudgetModel extends Model {
+export interface iBudget {
   id: string;
   userId: string;
   amount: number;
   startDate: string;
   endDate: string;
+  completed: boolean;
+}
+
+interface iBudgetModel extends iBudget, Model {
+  dataValues: any;
 }
 
 type BudgetModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): iBudgetModel;
 };
 
-const BudgetModel = <BudgetModelStatic>sequelize.define(
-  'Budget',
+export const BudgetModel = <BudgetModelStatic>sequelize.define(
+  'BudgetModel',
   {
     id: {
       type: DataTypes.UUID,
@@ -23,6 +28,7 @@ const BudgetModel = <BudgetModelStatic>sequelize.define(
     },
     userId: {
       type: DataTypes.UUID,
+      onDelete: 'cascade',
       references: {
         model: 'User',
         key: 'id'
@@ -32,20 +38,25 @@ const BudgetModel = <BudgetModelStatic>sequelize.define(
       type: DataTypes.DECIMAL,
       allowNull: false
     },
-    start_date: {
+    startDate: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    end_date: {
+    endDate: {
       allowNull: false,
       type: DataTypes.DATE
+    },
+    completed: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   },
   {
+    tableName: 'budget',
     underscored: true,
     freezeTableName: true,
-    tableName: 'budget'
+    updatedAt: false,
+    createdAt: false
   }
 );
-
-export default BudgetModel;

@@ -26,8 +26,6 @@ export async function verifyToken(
   const token: string = authorization.split(' ')[1];
   const privateKey = `${process.env.SECRET_KEY}`;
 
-  console.log(privateKey);
-
   jwt.verify(
     token,
     privateKey,

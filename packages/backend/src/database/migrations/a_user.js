@@ -32,6 +32,11 @@ module.exports = {
       created_at: {
         allowNull: false,
         type: DataTypes.DATE
+      },
+      has_pending_budget: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       }
     }),
   down: queryInterface => queryInterface.dropTable('user')

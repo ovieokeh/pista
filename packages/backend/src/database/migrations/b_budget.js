@@ -11,6 +11,8 @@ module.exports = {
       user_id: {
         type: DataTypes.UUID,
         allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: 'user',
           key: 'id'
@@ -27,6 +29,11 @@ module.exports = {
       end_date: {
         allowNull: false,
         type: DataTypes.DATE
+      },
+      completed: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       }
     }),
   down: queryInterface => queryInterface.dropTable('budget')
