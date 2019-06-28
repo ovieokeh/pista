@@ -1,5 +1,50 @@
 @import '../../../assets/globals';
 
+.ant-popover-inner-content {
+  padding: 0;
+
+  .popover-container {
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: space-evenly;
+
+    a,
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    a {
+      width: 150px;
+      padding: 0.5rem;
+      border: 0;
+      border-radius: 0;
+      &:hover {
+        border-color: $primary-blue;
+        background-color: $primary-blue;
+        color: white;
+      }
+    }
+
+    button {
+      background-color: transparent;
+      border-style: none;
+      border-radius: 0;
+      text-align: left;
+      width: 150px;
+      height: unset;
+      padding: 0.5rem;
+      &:hover {
+        border-color: $danger-red;
+        background-color: $danger-red;
+        color: white;
+      }
+    }
+  }
+}
+
 .nav-bar {
   display: flex;
   align-items: center;
@@ -29,16 +74,7 @@
     }
   }
 
-  .hamburger {
-    color: #333;
-    display: none;
-    & > * {
-      pointer-events: none;
-    }
-  }
-
   .nav-links {
-    z-index: 1;
     .nav-link {
       font-size: 0.9rem;
       font-weight: 600;
@@ -70,43 +106,6 @@
   .nav-bar {
     .logo {
       padding: 0 1rem;
-    }
-
-    .hamburger {
-      display: block;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 46px;
-      right: -200px;
-      background: white;
-      padding: 0;
-      border: 1px solid #ccc;
-      transition: right 200ms ease-in;
-
-      .nav-link {
-        font-weight: 400;
-        font-size: 0.8rem;
-        color: #333;
-        padding: 0.5rem;
-        margin-right: 0;
-        margin-left: 0;
-        border-bottom: 1px solid #dddddd57;
-        border-radius: 0;
-        &:last-child {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    .nav-links__show {
-      transition: right 200ms ease-out;
-      right: 0;
     }
   }
 }

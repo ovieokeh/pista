@@ -50,6 +50,8 @@
   },
   "devDependencies": {
     "@types/aos": "^3.0.1",
+    "@types/dotenv": "^6.1.1",
+    "@types/react-redux": "^7.1.1",
     "@types/react-router-dom": "^4.3.4"
   }
 }

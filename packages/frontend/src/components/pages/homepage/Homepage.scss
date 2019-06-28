@@ -11,6 +11,7 @@
     grid-template-rows: auto;
     grid-template-areas: 'left right';
     min-height: 100vh;
+    min-width: 100vw;
     color: white;
     background: #182848;
     background: $jumbo-gradient;

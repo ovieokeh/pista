@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Empty } from 'antd';
 import './Notfound.scss';
 
@@ -15,7 +14,13 @@ export const Notfound = () => {
           The page you&#39;re looking for doesn&#39;t exist or some other error
           occurred.
         </p>
-        <Link to="/">Go back to safety!</Link>
+        <button
+          onClick={() => {
+            window.history.back();
+          }}
+        >
+          Go back
+        </button>
       </div>
     </div>
   );

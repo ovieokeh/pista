@@ -45,8 +45,8 @@ export const Homepage = () => {
         </div>
       </div>
 
-      <div data-aos="fade-up" className="steps-container">
-        <h2>Here's how</h2>
+      <div className="steps-container">
+        <h2 data-aos="fade-up">Here's how</h2>
 
         <div data-aos="fade-up" className="step">
           <h3>1</h3>

@@ -4,7 +4,7 @@
   "description": "The backend for Pista",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
+    "build": "rm -rf ./dist && npm run migrate && tsc",
     "start": "node ./dist/server.js",
     "dev": "export NODE_ENV=development && ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/server.ts",
     "migrate": "node_modules/.bin/sequelize db:migrate",
