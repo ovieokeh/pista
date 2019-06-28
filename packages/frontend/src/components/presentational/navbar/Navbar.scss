@@ -1,0 +1,112 @@
+@import '../../../assets/globals';
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-bottom: 1px solid rgba(221, 221, 221, 0.301);
+  position: relative;
+
+  .logo {
+    width: 120px;
+    padding: 0 2rem;
+    float: left;
+    &::after {
+      float: none;
+      clear: both;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      &:hover {
+        cursor: pointer;
+        animation: logospin 1000ms linear 0ms infinite normal forwards;
+        -webkit-animation: logospin 1000ms linear 0s infinite normal forwards;
+      }
+    }
+  }
+
+  .hamburger {
+    color: #333;
+    display: none;
+    & > * {
+      pointer-events: none;
+    }
+  }
+
+  .nav-links {
+    z-index: 1;
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #555;
+      border-radius: 25px;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      transition: background-color 200ms;
+      &:hover,
+      &:focus {
+        background-color: $primary-blue;
+        color: white;
+      }
+
+      &:last-child {
+        color: white;
+        background-color: $primary-blue;
+        &:hover {
+          color: $primary-blue;
+          background-color: white;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $tablet-bp) {
+  .nav-bar {
+    .logo {
+      padding: 0 1rem;
+    }
+
+    .hamburger {
+      display: block;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 46px;
+      right: -200px;
+      background: white;
+      padding: 0;
+      border: 1px solid #ccc;
+      transition: right 200ms ease-in;
+
+      .nav-link {
+        font-weight: 400;
+        font-size: 0.8rem;
+        color: #333;
+        padding: 0.5rem;
+        margin-right: 0;
+        margin-left: 0;
+        border-bottom: 1px solid #dddddd57;
+        border-radius: 0;
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    .nav-links__show {
+      transition: right 200ms ease-out;
+      right: 0;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+@import 'node_modules/aos/src/sass/aos.scss';
+
+// variables
+$primary-blue: #4b6cb7;
+$primary-green: #2cbc79;
+$light-green: #cae7da;
+
+$home-gradient: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+$jumbo-gradient: linear-gradient(110deg, #4b6cb7 60%, #182848 60%);
+$tablet-bp: 768px;
+
+// keyframes
+@keyframes logospin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideup {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slideleft {
+  from {
+    opacity: 0.5;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slidedown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.slideLeft {
+  animation: slideleft 500ms linear 0ms 1 normal forwards;
+}
+.slideDown {
+  animation: slidedown 500ms linear 0ms 1 normal forwards;
+}
+
+.btn-link {
+  font-size: 1rem;
+  margin: 0.5rem;
+  border-radius: 25px;
+  background-color: white;
+  color: #182848;
+  padding: 0.8rem 1.5rem;
+  transition: background-color 200ms;
+  &:hover {
+    border: 0.5px solid $primary-blue;
+    background-color: $primary-blue;
+    color: white;
+  }
+  &:last-child {
+    background-color: #182848;
+    color: white;
+    &:hover {
+      background-color: white;
+      color: #182848;
+    }
+  }
+}

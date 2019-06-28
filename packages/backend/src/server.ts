@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import '@babel/polyfill/noConflict';
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -20,6 +21,12 @@ async function start() {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use('/api', router);
+
+  server.use(express.static(path.join(__dirname, '../../frontend/build')));
+
+  server.get('*', (_, res) => {
+    res.sendFile(path.resolve(__dirname, '../../frontend/build/index.html'));
+  });
 
   server.listen(port, () => console.log(`server running on port ${port}`));
 }

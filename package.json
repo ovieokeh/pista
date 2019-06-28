@@ -7,7 +7,8 @@
     "install:all": "$(npm bin)/lerna exec \"npm install\" --stream",
     "dev": "$(npm bin)/lerna run dev --stream",
     "build": "$(npm bin)/lerna run build --stream",
-    "start": "$(npm bin)/lerna run start --stream",
+    "heroku-postbuild": "npm run install:all && $(npm bin)/lerna run build --stream",
+    "start": "node ./packages/backend/dist/server.js",
     "test": "$(npm bin)/lerna run test --stream"
   },
   "repository": {
