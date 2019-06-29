@@ -15,6 +15,32 @@ import AnalyticImg from '../../../assets/analytics.svg';
 import './Homepage.scss';
 
 export const Homepage = () => {
+  const renderSteps = () => {
+    const steps = [
+      { description: stepOneDescription, image: StartmanImg },
+      { description: stepTwoDescription, image: SetupImg },
+      { description: stepThreeDescription, image: AnalyticImg }
+    ];
+
+    return steps.map((desc, index) => (
+      <React.Fragment key={index}>
+        <div data-aos="zoom-in" className="step">
+          <h3 data-aos="fade-up">{index + 1}</h3>
+          <div>
+            <span data-aos="fade-up">{desc.description}</span>
+            <img
+              data-aos="fade-up"
+              alt={`step ${index + 1}`}
+              src={desc.image}
+            />
+          </div>
+        </div>
+
+        {index !== 2 && <div data-aos="fade-in" className="divider" />}
+      </React.Fragment>
+    ));
+  };
+
   return (
     <div className="homepage">
       <div className="jumbo">
@@ -37,44 +63,37 @@ export const Homepage = () => {
             </Link>
           </div>
         </div>
-        <div data-aos="fade-up" data-aos-delay="100" className="right">
-          <img alt="timeline" src={TimelineImg} />
-          <img alt="savings-rate" src={SavingsRate} />
-          <img alt="analysis" src={AnalysisPhoto} />
-          <img alt="savings-generated" src={SavingsGenerated} />
+        <div className="right">
+          <img
+            data-aos="fade-up"
+            data-aos-delay="100"
+            alt="timeline"
+            src={TimelineImg}
+          />
+          <img
+            data-aos="fade-up"
+            data-aos-delay="150"
+            alt="savings-rate"
+            src={SavingsRate}
+          />
+          <img
+            data-aos="fade-up"
+            data-aos-delay="200"
+            alt="analysis"
+            src={AnalysisPhoto}
+          />
+          <img
+            data-aos="fade-up"
+            data-aos-delay="250"
+            alt="savings-generated"
+            src={SavingsGenerated}
+          />
         </div>
       </div>
 
       <div className="steps-container">
         <h2 data-aos="fade-up">Here's how</h2>
-
-        <div data-aos="fade-up" className="step">
-          <h3>1</h3>
-          <div>
-            <span>{stepOneDescription}</span>
-            <img alt="step one" src={StartmanImg} />
-          </div>
-        </div>
-
-        <div data-aos="fade-in" className="divider" />
-
-        <div data-aos="fade-up" className="step">
-          <h3>2</h3>
-          <div>
-            <span>{stepTwoDescription}</span>
-            <img alt="step two" src={SetupImg} />
-          </div>
-        </div>
-
-        <div data-aos="fade-in" className="divider" />
-
-        <div data-aos="fade-up" className="step">
-          <h3>3</h3>
-          <div>
-            <span>{stepThreeDescription}</span>
-            <img alt="step three" src={AnalyticImg} />
-          </div>
-        </div>
+        {renderSteps()}
       </div>
 
       <div data-aos="zoom-in" className="end">
