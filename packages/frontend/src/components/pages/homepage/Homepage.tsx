@@ -24,7 +24,7 @@ export const Homepage = () => {
 
     return steps.map((desc, index) => (
       <React.Fragment key={index}>
-        <div data-aos="zoom-in" className="step">
+        <div className="step">
           <h3 data-aos="fade-up">{index + 1}</h3>
           <div>
             <span data-aos="fade-up">{desc.description}</span>
@@ -36,7 +36,7 @@ export const Homepage = () => {
           </div>
         </div>
 
-        {index !== 2 && <div data-aos="fade-in" className="divider" />}
+        {index !== 2 && <div className="divider" />}
       </React.Fragment>
     ));
   };
@@ -91,9 +91,9 @@ export const Homepage = () => {
         </div>
       </div>
 
-      <div className="steps-container">
-        <h2 data-aos="fade-up">Here's how</h2>
-        {renderSteps()}
+      <div className="content">
+        <h2 data-aos="zoom-in">Here's how</h2>
+        <div className="steps-container">{renderSteps()}</div>
       </div>
 
       <div data-aos="zoom-in" className="end">

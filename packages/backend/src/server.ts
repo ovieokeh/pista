@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import expressValidator from 'express-validator';
 import throng from 'throng';
+import compression from 'compression';
 import router from './router';
 
 require('dotenv').config();
@@ -20,6 +21,13 @@ async function start() {
   server.use(expressValidator());
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
+  server.use(
+    compression({
+      filter: (req: express.Request) => {
+        if (req.url.includes('api')) return false;
+      }
+    })
+  );
   server.use('/api', router);
 
   server.use(express.static(path.join(__dirname, '../../frontend/build')));

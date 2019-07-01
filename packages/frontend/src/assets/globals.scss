@@ -63,18 +63,20 @@ $tablet-bp: 768px;
 .btn-link {
   font-size: 1rem;
   margin: 0.5rem;
-  border-radius: 25px;
-  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: #fff;
   color: #182848;
   padding: 0.8rem 1.5rem;
   transition: background-color 200ms;
   &:hover {
-    border: 0.5px solid $primary-blue;
+    border-color: white;
     background-color: $primary-blue;
     color: white;
   }
   &:last-child {
-    background-color: #182848;
+    border: 1px solid white;
+    background-color: transparent;
     color: white;
     &:hover {
       background-color: white;

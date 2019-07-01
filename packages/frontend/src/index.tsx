@@ -8,8 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 
 AOS.init({
-  duration: 800,
-  mirror: true
+  duration: 800
 });
 
 ReactDOM.render(

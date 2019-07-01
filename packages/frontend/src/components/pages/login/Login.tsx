@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { LoginCredentials } from '../../../redux/types';
+import { LoginCredentials, User } from '../../../redux/types';
 import { loginRequest } from '../../../redux/actions/auth';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import './Login.scss';
@@ -12,6 +12,7 @@ interface UserFormProps extends LoginCredentials, FormComponentProps {
   history: any;
   loading: boolean;
   error: any;
+  user: User;
 }
 
 const tailFormItemLayout = {
@@ -41,9 +42,14 @@ class LForm extends React.Component<UserFormProps, any> {
           window.localStorage.setItem('remember', 'true');
         }
 
-        error
-          ? this.renderErrors(error, details, form)
-          : this.props.history.push('/');
+        if (error) {
+          this.renderErrors(error, details, form);
+          return;
+        }
+
+        this.props.user.hasPendingBudget
+          ? this.props.history.push('/dashboard')
+          : this.props.history.push('/setup');
       }
     });
   };
@@ -138,6 +144,7 @@ class LForm extends React.Component<UserFormProps, any> {
 const ULogin = Form.create<UserFormProps>({ name: 'normal_login' })(LForm);
 
 const mapStateToProps = (state: any) => ({
+  user: state.auth.user,
   loading: state.auth.loading,
   error: state.auth.error
 });

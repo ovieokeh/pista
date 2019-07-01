@@ -3,3 +3,4 @@ export * from './presentational/navbar/Navbar';
 export * from './pages/notfound/Notfound';
 export * from './pages/signup/Signup';
 export * from './pages/login/Login';
+export * from './pages/setup/Setup';
