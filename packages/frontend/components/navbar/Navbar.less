@@ -1,0 +1,123 @@
+@import '../../assets/globals';
+
+.ant-popover-inner-content {
+  padding: 0;
+
+  .popover-container {
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: space-evenly;
+
+    a,
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    a {
+      width: 150px;
+      padding: 0.5rem;
+      border: 0;
+      border-radius: 0;
+      &:hover {
+        border-color: @primary-blue;
+        background-color: @primary-blue;
+        color: white;
+      }
+    }
+
+    button {
+      background-color: transparent;
+      border-style: none;
+      border-radius: 0;
+      text-align: left;
+      width: 150px;
+      height: unset;
+      padding: 0.5rem;
+      &:hover {
+        border-color: @danger-red;
+        background-color: @danger-red;
+        color: white;
+      }
+    }
+  }
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-bottom: 1px solid rgba(221, 221, 221, 0.301);
+  position: relative;
+
+  .logo {
+    width: 120px;
+    padding: 0 2rem;
+    float: left;
+    &::after {
+      float: none;
+      clear: both;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      &:hover {
+        cursor: pointer;
+        animation: logospin 1000ms linear 0ms infinite normal forwards;
+        -webkit-animation: logospin 1000ms linear 0s infinite normal forwards;
+      }
+    }
+  }
+
+  .nav-links {
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #555;
+      border-radius: 25px;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      transition: background-color 200ms;
+      &:hover,
+      &:focus {
+        background-color: @primary-blue;
+        color: white;
+      }
+
+      &:last-child {
+        color: white;
+        background-color: @primary-blue;
+        &:hover {
+          color: @primary-blue;
+          background-color: white;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @tablet-bp) {
+  .nav-bar {
+    .logo {
+      padding: 0 1rem;
+      padding-left: 0.25rem;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: space-between;
+      justify-content: flex-end;
+      min-width: 200px;
+      .nav-link {
+        font-size: 0.8rem;
+        margin: 0 0.2rem;
+      }
+    }
+  }
+}

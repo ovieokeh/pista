@@ -30,10 +30,10 @@ async function start() {
   );
   server.use('/api', router);
 
-  server.use(express.static(path.join(__dirname, '../../frontend/build')));
+  server.use(express.static(path.join(__dirname, '../../frontend/out')));
 
   server.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, '../../frontend/build/index.html'));
+    res.sendFile(path.resolve(__dirname, '../../frontend/out/index.html'));
   });
 
   server.listen(port, () => console.log(`server running on port ${port}`));
