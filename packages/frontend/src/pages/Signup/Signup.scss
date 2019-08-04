@@ -1,0 +1,80 @@
+@import '../../../assets/globals.scss';
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 97%;
+  background-color: $darker-blue;
+
+  &__form {
+    background-color: #fff;
+    max-width: 430px;
+    min-width: 250px;
+    min-height: 400px;
+    width: 60%;
+    margin-top: 10%;
+    padding: 1rem 5% 0 5%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+
+    &__header {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-align: center;
+      color: #555;
+      margin-bottom: 0;
+    }
+
+    &__intro {
+      text-align: center;
+      margin-top: 0.5rem;
+      margin-bottom: 3rem;
+    }
+
+    &__submit-btn {
+      display: block;
+      font-size: 1rem;
+      border-style: none;
+      color: white;
+      background-color: $primary-blue;
+      border: 1px solid $primary-blue;
+      padding: 0.5rem 0;
+      margin: 2rem auto;
+      width: 90%;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 300ms;
+      outline: 0;
+      &:hover {
+        background-color: white;
+        color: $primary-blue;
+      }
+    }
+  }
+
+  &__login-cta {
+    background-color: #f2f2f2;
+    max-width: 430px;
+    min-width: 250px;
+    width: 60%;
+    padding: 1.5rem 5%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-align: center;
+
+    &__content {
+      color: #666;
+    }
+  }
+}
+
+@media only screen and (max-width: $tablet-bp) {
+  .signup {
+    &__form,
+    &__login-cta {
+      width: 80%;
+    }
+  }
+}

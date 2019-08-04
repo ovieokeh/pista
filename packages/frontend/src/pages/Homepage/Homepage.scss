@@ -1,0 +1,141 @@
+@import '../../../assets/globals.scss';
+
+.homepage {
+  &__jumbo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    grid-template-rows: 95vh;
+    grid-auto-rows: 0;
+    overflow-y: hidden;
+    width: 100%;
+    color: white;
+    background: $jumbo-gradient;
+    background-color: #182848;
+
+    &--left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 0 1rem;
+
+      &__title {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      &__text {
+        font-size: 1.2rem;
+      }
+
+      &__btn-container {
+        margin-top: 2.5rem;
+
+        .btn-link {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &--right {
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      grid-gap: 3%;
+      grid-template-columns: repeat(2, minmax(100px, 250px));
+      grid-template-rows: repeat(2, minmax(200, 300px));
+      padding: 0 1rem;
+
+      &__image {
+        max-width: 100%;
+        max-height: 100%;
+        filter: drop-shadow(15px 5px 25px rgba(17, 17, 17, 0.5));
+      }
+    }
+  }
+
+  &__content {
+    background-color: $darker-blue;
+    padding: 5% 10%;
+
+    &__title {
+      color: white;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    &__steps-container {
+      display: grid;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+      grid-gap: 1rem;
+
+      &__step {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        background-color: white;
+        box-shadow: 0 1px 6px rgba(57, 73, 76, 0.35);
+        padding: 0.5rem 1rem;
+
+        &__title {
+          width: fit-content;
+          width: -moz-fit-content;
+          font-size: 1rem;
+          color: white;
+          background-color: $primary-blue;
+          border-radius: 25px;
+          padding: 0.5rem 1rem;
+          margin: 1rem;
+        }
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          &__description {
+            font-size: 1rem;
+            font-weight: 200;
+            margin: 0 1rem;
+          }
+
+          &__image {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin: 1rem 0;
+          }
+        }
+      }
+    }
+  }
+
+  &__footer {
+    padding: 1% 5%;
+    text-align: center;
+
+    &__cta {
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    #btn-link {
+      display: block;
+      width: 40%;
+      margin: 2.5% auto;
+      color: $primary-blue;
+      border: 1px solid $primary-blue;
+      &:hover {
+        border-color: $primary-blue;
+        background-color: $primary-blue;
+        color: white;
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@import '../../../assets/globals.scss';
+
+.form-group {
+  max-width: 90%;
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  &__error {
+    font-size: 0.8rem;
+    color: $danger-red;
+    padding: 0.25rem 0;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid $very-light-grey;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: border 500ms;
+
+    &--error {
+      border-color: $danger-red;
+      animation: shake 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    &:hover {
+      border-color: #4b6bb77e;
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 3px 1px #4b6bb77e;
+    }
+
+    &__label {
+      display: inline-flex;
+      padding: 0 0.5rem;
+    }
+
+    &__input {
+      display: inline-block;
+      width: 100%;
+      border: none;
+      border-left: 1px solid $very-light-grey;
+      padding: 0.5rem;
+      padding-left: 0.5rem;
+      font-size: 0.8rem;
+      outline: 0;
+      &::placeholder {
+        font-weight: 500;
+      }
+    }
+  }
+}

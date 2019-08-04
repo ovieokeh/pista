@@ -1,0 +1,36 @@
+{
+  "name": "pista",
+  "version": "1.0.0",
+  "description": "An expense management tool to help track your expenses",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "$(npm bin)/lerna exec \"npm install\" --stream",
+    "dev": "$(npm bin)/lerna run dev --stream",
+    "build": "$(npm bin)/lerna run build --stream",
+    "heroku-postbuild": "npm run install:all && $(npm bin)/lerna run build --stream",
+    "start": "node ./packages/backend/dist/server.js",
+    "test": "$(npm bin)/lerna run test --stream"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ovieokeh/pista.git"
+  },
+  "keywords": [
+    "nodejs",
+    "react.js",
+    "typescript"
+  ],
+  "author": "Ovie Okeh",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ovieokeh/pista/issues"
+  },
+  "homepage": "https://github.com/ovieokeh/pista#readme",
+  "dependencies": {
+    "lerna": "^3.16.4",
+    "typescript": "^3.5.2"
+  },
+  "devDependencies": {
+    "@welldone-software/why-did-you-render": "^3.3.1"
+  }
+}
