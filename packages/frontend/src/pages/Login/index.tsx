@@ -1,24 +1,25 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { signupRequest } from '~requests';
-import { UserIcon, EmailIcon, LockIcon, Button, FormGroup } from '~components';
-import { SIGNUP_SUCCESS } from '~reducers/types';
+import { EmailIcon, LockIcon, Checkbox, Button, FormGroup } from '~components';
 import { persistData, toggleButtonLoader } from '~utils';
+import { loginRequest } from '~requests';
+import { LOGIN_SUCCESS } from '~reducers/types';
 import { useFormData } from './customHooks';
-import './Signup.scss';
+import './Login.scss';
 
 interface iProps {
   dispatch: any;
 }
 
-const Signup: React.FunctionComponent<iProps> = props => {
-  window.document.title = 'Start tracking - Pista';
+const Login: React.FunctionComponent<iProps> = props => {
+  window.document.title = 'Login to your account - Pista';
   const submitBtn = React.useRef<HTMLButtonElement>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const {
     formData,
     requestErrors,
     handleInputChange,
+    handleCheckbox,
     handleErrors
   } = useFormData();
 
@@ -30,59 +31,31 @@ const Signup: React.FunctionComponent<iProps> = props => {
     event.preventDefault();
     toggleButtonLoader(submitBtn, true, toggleLoadingState);
 
-    const response = await signupRequest(formData);
+    const response = await loginRequest(formData);
     if (response.status === 'error') {
       handleErrors(response);
       toggleButtonLoader(submitBtn, false, setIsLoading);
       return;
     }
 
-    persistData('auth', {
-      user: response.user,
-      token: response.token
-    });
+    formData.shouldRemember &&
+      persistData('auth', {
+        user: response.user,
+        token: response.token
+      });
 
-    props.dispatch({ type: SIGNUP_SUCCESS, data: response });
+    props.dispatch({ type: LOGIN_SUCCESS, data: response });
   };
 
   return (
-    <div className="signup">
+    <div className="login">
       <form
         data-aos="slide-down"
         data-aos-duration="300"
-        className="signup__form"
+        className="login__form"
         onSubmit={handleFormSubmission}
       >
-        <h2 className="signup__form__header">Welcome to Pista</h2>
-        <p className="signup__form__intro">
-          Please create an account to get started
-        </p>
-
-        <FormGroup
-          id="firstName"
-          name="firstName"
-          inputType="text"
-          value={formData.firstName}
-          onChange={handleInputChange}
-          placeHolder="First Name"
-          labelIcon={<UserIcon />}
-          autoComplete="first-name"
-          error={requestErrors.firstName}
-          required
-        />
-
-        <FormGroup
-          id="lastName"
-          name="lastName"
-          inputType="text"
-          value={formData.lastName}
-          onChange={handleInputChange}
-          placeHolder="Last Name"
-          labelIcon={<UserIcon />}
-          autoComplete="last-name"
-          error={requestErrors.lastName}
-          required
-        />
+        <h2 className="login__form__header">Welcome back</h2>
 
         <FormGroup
           id="email"
@@ -110,9 +83,16 @@ const Signup: React.FunctionComponent<iProps> = props => {
           required
         />
 
+        <Checkbox
+          id="remember"
+          label="Remember me"
+          checked={formData.shouldRemember}
+          onChange={handleCheckbox}
+        />
+
         <Button
           ref={submitBtn}
-          text="Sign up"
+          text="Login"
           type="submit"
           isLoading={isLoading}
         />
@@ -120,14 +100,14 @@ const Signup: React.FunctionComponent<iProps> = props => {
       <div
         data-aos="slide-up"
         data-aos-duration="500"
-        className="signup__login-cta"
+        className="login__signup-cta"
       >
-        <span className="signup__login-cta__content">
-          Already have an account? <Link to="/login">Login</Link>
+        <span className="login__signup-cta__content">
+          New here? <Link to="/signup">Signup</Link>
         </span>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Login;

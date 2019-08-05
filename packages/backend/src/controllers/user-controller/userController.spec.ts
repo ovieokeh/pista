@@ -32,7 +32,7 @@ describe('User', () => {
             expect(res.body.data.lastName.msg).to.be(
               'Last Name field is required'
             );
-            expect(res.body.data.email.msg).to.be('email field is required');
+            expect(res.body.data.email.msg).to.be('Email field is required');
             expect(res.body.data.password.msg).to.be(
               'Password field is required'
             );
@@ -105,9 +105,9 @@ describe('User', () => {
           .end((_, res) => {
             expect(res.status).to.be(422);
             expect(res.body.message).to.be('validation error');
-            expect(res.body.data.email.msg).to.be('email field is required');
+            expect(res.body.data.email.msg).to.be('Email field is required');
             expect(res.body.data.password.msg).to.be(
-              'password field is required'
+              'Password field is required'
             );
             done();
           });
@@ -124,7 +124,7 @@ describe('User', () => {
           .end((_, res) => {
             expect(res.status).to.be(422);
             expect(res.body.message).to.be('validation error');
-            expect(res.body.data.email.msg).to.be('email address is invalid');
+            expect(res.body.data.email.msg).to.be('Email address is invalid');
             done();
           });
       });
@@ -156,7 +156,7 @@ describe('User', () => {
         })
         .end((_, res) => {
           expect(res.status).to.be(401);
-          expect(res.body.message).to.be('invalid login credentials');
+          expect(res.body.message).to.be('Invalid login credentials');
           done();
         });
     });

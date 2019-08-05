@@ -1,13 +1,21 @@
-import { SIGNUP_SUCCESS, SIGNUP_BEGIN } from './types';
-import { AuthState, SignupTypes } from './interfaces';
+import { SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT } from './types';
+import { AuthState, AuthTypes } from './interfaces';
 
-export function authReducer(state: AuthState, action: SignupTypes): AuthState {
+export function authReducer(state: AuthState, action: AuthTypes): AuthState {
   switch (action.type) {
     case SIGNUP_SUCCESS:
-      console.log(action);
-      return {
+    case LOGIN_SUCCESS:
+      const newState = {
         user: action.data.user,
         token: action.data.token
+      };
+
+      return newState;
+
+    case LOGOUT:
+      return {
+        user: null,
+        token: ''
       };
 
     default:

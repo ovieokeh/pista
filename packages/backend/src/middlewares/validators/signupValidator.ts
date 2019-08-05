@@ -38,7 +38,6 @@ export class SignupValidator {
       .notEmpty()
       .withMessage('Email field is required')
       .isEmail()
-      .normalizeEmail()
       .withMessage('Email address is invalid');
   }
 

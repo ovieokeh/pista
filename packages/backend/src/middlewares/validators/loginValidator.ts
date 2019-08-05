@@ -5,21 +5,22 @@ export class LoginValidator {
     request
       .checkBody('email')
       .exists()
-      .withMessage('email field is required')
+      .withMessage('Email field is required')
       .trim()
       .notEmpty()
+      .withMessage('Email field is required')
       .isEmail()
-      .normalizeEmail()
-      .withMessage('email address is invalid');
+      .withMessage('Email address is invalid');
   }
 
   static password(request: express.Request) {
     request
       .checkBody('password')
       .exists()
-      .withMessage('password field is required')
+      .withMessage('Password field is required')
       .trim()
       .notEmpty()
+      .withMessage('Password field is required')
       .isLength({ min: 6 })
       .withMessage('password must be longer than 6 characters');
   }

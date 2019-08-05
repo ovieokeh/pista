@@ -1,0 +1,51 @@
+@import '../../../assets/globals.scss';
+
+input[type='checkbox'] + label {
+  display: flex;
+  align-items: center;
+  margin: 0.2em;
+  padding: 0.2em;
+  padding-left: 0;
+  margin-left: 0;
+  cursor: pointer;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+input[type='checkbox'] + label:after {
+  content: '\2715';
+  border: 1px solid $very-light-grey;
+  border-radius: 0.2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.3em;
+  vertical-align: bottom;
+  color: transparent;
+  transition: 0.2s;
+}
+
+input[type='checkbox'] + label:active:after {
+  transform: scale(0);
+}
+
+input[type='checkbox']:checked + label:after {
+  background-color: $primary-blue;
+  border-color: $primary-blue;
+  color: #fff;
+}
+
+input[type='checkbox']:disabled + label:after {
+  transform: scale(1);
+  border-color: #aaa;
+}
+
+input[type='checkbox']:checked:disabled + label:after {
+  transform: scale(1);
+  background-color: #bfb;
+  border-color: #bfb;
+}

@@ -14,7 +14,7 @@ interface iProps {
   error?: any;
 }
 
-const FormGroup: React.FunctionComponent<iProps> = (props: iProps) => {
+export const FormGroup: React.FunctionComponent<iProps> = (props: iProps) => {
   return (
     <React.Fragment>
       <div className="form-group">
@@ -42,5 +42,3 @@ const FormGroup: React.FunctionComponent<iProps> = (props: iProps) => {
     </React.Fragment>
   );
 };
-
-export default FormGroup;
