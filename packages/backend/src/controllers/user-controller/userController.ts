@@ -16,7 +16,7 @@ export class UserController {
     try {
       const result = await UserService.login(req.body);
       if (!result) {
-        respond(res, 'error', 401, 'invalid login credentials');
+        respond(res, 'error', 401, 'Invalid login credentials');
         return;
       }
 

@@ -1,0 +1,32 @@
+@import '../../../assets/globals.scss';
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border-style: none;
+  color: white;
+  background-color: $primary-blue;
+  border: 1px solid $primary-blue;
+  padding: 0.5rem 0;
+  margin: 2rem auto;
+  width: 90%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 300ms;
+  outline: 0;
+  &:hover {
+    background-color: white;
+    color: $primary-blue;
+  }
+  &:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+
+  div {
+    height: 20px;
+    margin-right: 0.3rem;
+  }
+}

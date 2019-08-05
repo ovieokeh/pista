@@ -1,4 +1,4 @@
-import { SIGNUP_BEGIN, SIGNUP_SUCCESS } from './types';
+import { SIGNUP_BEGIN, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT } from './types';
 
 export interface User {
   id: string;
@@ -24,9 +24,18 @@ interface SignupSuccess {
   data: UserFromBackend;
 }
 
+interface LoginSuccess {
+  type: typeof LOGIN_SUCCESS;
+  data: UserFromBackend;
+}
+
+export interface Logout {
+  type: typeof LOGOUT;
+}
+
 export interface AuthState {
   user: User | null;
   token: string;
 }
 
-export type SignupTypes = SignupBegin | SignupSuccess;
+export type AuthTypes = SignupBegin | SignupSuccess | LoginSuccess | Logout;

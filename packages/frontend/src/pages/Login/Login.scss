@@ -1,6 +1,6 @@
 @import '../../../assets/globals.scss';
 
-.signup {
+.login {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +12,6 @@
     background-color: #fff;
     max-width: 430px;
     min-width: 250px;
-    min-height: 400px;
     width: 60%;
     margin-top: 10%;
     padding: 1rem 5% 0 5%;
@@ -24,17 +23,11 @@
       letter-spacing: 4px;
       text-align: center;
       color: #555;
-      margin-bottom: 0;
-    }
-
-    &__intro {
-      text-align: center;
-      margin-top: 0.5rem;
       margin-bottom: 3rem;
     }
   }
 
-  &__login-cta {
+  &__signup-cta {
     background-color: #f2f2f2;
     max-width: 430px;
     min-width: 250px;
@@ -51,9 +44,9 @@
 }
 
 @media only screen and (max-width: $tablet-bp) {
-  .signup {
+  .login {
     &__form,
-    &__login-cta {
+    &__signup-cta {
       width: 80%;
     }
   }

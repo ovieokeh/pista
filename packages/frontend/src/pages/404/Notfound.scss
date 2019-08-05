@@ -18,6 +18,8 @@
   button {
     font-size: 1rem;
     margin: 0.5rem;
+    border-style: none;
+    border: 1px solid $primary-blue;
     border-radius: 25px;
     background-color: white;
     color: #182848;
@@ -26,7 +28,7 @@
     cursor: pointer;
     outline: 0;
     &:hover {
-      border: 0.5px solid $primary-blue;
+      border: 1px solid $primary-blue;
       background-color: $primary-blue;
       color: white;
     }

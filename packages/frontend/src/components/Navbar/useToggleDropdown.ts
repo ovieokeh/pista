@@ -1,18 +1,21 @@
+import { useEffect } from 'react';
+
 export function useToggleDropdown(dropdown: React.RefObject<HTMLDivElement>) {
   const handleProfileClick = (event: Event) => {
-    let dropdownElement = dropdown.current as HTMLDivElement;
+    const dropdownElement = dropdown.current as HTMLDivElement;
+    const target = event.target as HTMLElement;
 
-    if (event.target) {
-      const target = event.target as HTMLElement;
+    if (!dropdownElement) return;
 
-      target.id === 'dropdown-toggle'
-        ? dropdownElement.classList.toggle('navbar__dropdown--visible')
-        : dropdownElement.classList.remove('navbar__dropdown--visible');
-    }
+    target.id === 'dropdown-toggle'
+      ? dropdownElement.classList.toggle('navbar__dropdown--visible')
+      : dropdownElement.classList.remove('navbar__dropdown--visible');
   };
 
-  document.body.addEventListener('click', handleProfileClick);
-  return () => {
-    document.body.removeEventListener('click', handleProfileClick);
-  };
+  useEffect(() => {
+    document.body.addEventListener('click', handleProfileClick);
+    return () => {
+      document.body.removeEventListener('click', handleProfileClick);
+    };
+  });
 }

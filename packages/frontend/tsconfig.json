@@ -18,7 +18,8 @@
     "paths": {
       "~*": ["./src/*"],
       "assets": ["./assets/*"],
-      "components": ["src/assets/*"]
+      "components": ["src/assets/*"],
+      "utils": ["src/utils/*"]
     }
   }
 }

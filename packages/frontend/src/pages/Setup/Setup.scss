@@ -1,0 +1,28 @@
+@import '../../../assets/globals.scss';
+
+.setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 97%;
+  background-color: $darker-blue;
+
+  &__form {
+    background-color: #fff;
+    min-width: 250px;
+    width: 60%;
+    margin-top: 10%;
+    padding: 1rem 5%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+
+    &__header {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-align: center;
+      color: #555;
+      margin-bottom: 3rem;
+    }
+  }
+}
