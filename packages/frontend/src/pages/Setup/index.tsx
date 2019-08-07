@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { DatePicker } from 'antd';
 import { FormGroup, NairaIcon } from '~components';
 import './Setup.scss';
 
-const { RangePicker } = DatePicker;
 const Setup: React.FunctionComponent = () => {
   return (
     <div className="setup">

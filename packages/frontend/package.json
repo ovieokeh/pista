@@ -21,7 +21,6 @@
     "utils": "./src/utils/"
   },
   "dependencies": {
-    "antd": "^3.21.2",
     "aos": "^2.3.4",
     "assets": "^3.0.1",
     "axios": "^0.18.0",
@@ -47,7 +46,6 @@
     "babel-preset-react": "^6.24.1",
     "parcel-bundler": "^1.12.3",
     "sass": "^1.22.9",
-    "ts-node-dev": "^1.0.0-pre.40",
     "typescript": "3.5.2"
   }
 }
