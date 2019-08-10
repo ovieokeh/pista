@@ -3,131 +3,183 @@ import { Link } from 'react-router-dom';
 import { signupRequest } from '~requests';
 import { UserIcon, EmailIcon, LockIcon, Button, FormGroup } from '~components';
 import { SIGNUP_SUCCESS } from '~reducers/types';
-import { persistData, toggleButtonLoader } from '~utils';
-import { useFormData } from './customHooks';
+import { persistData } from '~utils';
+import { iProps, iState } from './interfaces';
 import './Signup.scss';
 
-interface iProps {
-  dispatch: any;
-}
+class Signup extends React.PureComponent<iProps, iState> {
+  submitBtn: React.RefObject<HTMLButtonElement>;
 
-const Signup: React.FunctionComponent<iProps> = props => {
-  window.document.title = 'Start tracking - Pista';
-  const submitBtn = React.useRef<HTMLButtonElement>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const {
-    formData,
-    requestErrors,
-    handleInputChange,
-    handleErrors
-  } = useFormData();
+  constructor(props: iProps) {
+    super(props);
 
-  const toggleLoadingState = () => {
-    setIsLoading(!isLoading);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      firstNameErrors: '',
+      lastNameErrors: '',
+      emailErrors: '',
+      passwordErrors: '',
+      isLoading: false,
+    };
+
+    this.submitBtn = React.createRef<HTMLButtonElement>();
+  }
+
+  handleInputFocus = (event: React.FocusEvent) => {
+    const target = event.target as HTMLInputElement;
+    this.setState({
+      [`${target.name}Errors`]: '',
+    });
   };
 
-  const handleFormSubmission = async (event: React.FormEvent) => {
-    event.preventDefault();
-    toggleButtonLoader(submitBtn, true, toggleLoadingState);
+  handleInputChange = (event: React.FormEvent) => {
+    const target = event.target as HTMLInputElement;
 
-    const response = await signupRequest(formData);
+    this.setState({
+      [target.name]: target.value,
+      emailErrors: '',
+      passwordErrors: '',
+    });
+  };
+
+  toggleSubmitButton = (state: boolean) => {
+    if (this.submitBtn && this.submitBtn.current) {
+      this.submitBtn.current.disabled = state;
+    }
+  };
+
+  handleFormSubmission = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    this.setState({ isLoading: true });
+    this.toggleSubmitButton(true);
+
+    const response = await signupRequest({ ...this.state });
+
     if (response.status === 'error') {
-      handleErrors(response);
-      toggleButtonLoader(submitBtn, false, setIsLoading);
+      this.handleFormErrors(response);
+      this.toggleSubmitButton(false);
+      this.setState({ isLoading: false });
       return;
     }
 
     persistData('auth', {
       user: response.user,
-      token: response.token
+      token: response.token,
     });
 
-    props.dispatch({ type: SIGNUP_SUCCESS, data: response });
+    this.props.dispatch({ type: SIGNUP_SUCCESS, data: response });
   };
 
-  return (
-    <div className="signup">
-      <form
-        data-aos="slide-down"
-        data-aos-duration="300"
-        className="signup__form"
-        onSubmit={handleFormSubmission}
-      >
-        <h2 className="signup__form__header">Welcome to Pista</h2>
-        <p className="signup__form__intro">
-          Please create an account to get started
-        </p>
+  handleFormErrors = (response: any) => {
+    if (response.message === 'Email address already in use') {
+      this.setState({
+        emailErrors: response.message,
+      });
+      return;
+    }
 
-        <FormGroup
-          id="firstName"
-          name="firstName"
-          inputType="text"
-          value={formData.firstName}
-          onChange={handleInputChange}
-          placeHolder="First Name"
-          labelIcon={<UserIcon />}
-          autoComplete="first-name"
-          error={requestErrors.firstName}
-          required
-        />
+    const { data } = response;
 
-        <FormGroup
-          id="lastName"
-          name="lastName"
-          inputType="text"
-          value={formData.lastName}
-          onChange={handleInputChange}
-          placeHolder="Last Name"
-          labelIcon={<UserIcon />}
-          autoComplete="last-name"
-          error={requestErrors.lastName}
-          required
-        />
+    for (const err in data) {
+      this.setState({
+        [`${err}Errors`]: data[err].msg,
+      });
+    }
+  };
 
-        <FormGroup
-          id="email"
-          name="email"
-          inputType="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeHolder="Email"
-          labelIcon={<EmailIcon />}
-          autoComplete="email"
-          error={requestErrors.email}
-          required
-        />
+  render() {
+    return (
+      <div className="signup">
+        <form
+          data-aos="slide-down"
+          data-aos-duration="300"
+          className="signup__form"
+          onSubmit={this.handleFormSubmission}
+        >
+          <h2 className="signup__form__header">Welcome to Pista</h2>
+          <p className="signup__form__intro">
+            Please create an account to get started
+          </p>
 
-        <FormGroup
-          id="password"
-          name="password"
-          inputType="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          placeHolder="Password"
-          labelIcon={<LockIcon />}
-          autoComplete="new-password"
-          error={requestErrors.password}
-          required
-        />
+          <FormGroup
+            id="firstName"
+            name="firstName"
+            inputType="text"
+            value={this.state.firstName}
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+            placeHolder="First Name"
+            labelIcon={<UserIcon />}
+            autoComplete="first-name"
+            error={this.state.firstNameErrors}
+            required
+          />
 
-        <Button
-          ref={submitBtn}
-          text="Sign up"
-          type="submit"
-          isLoading={isLoading}
-        />
-      </form>
-      <div
-        data-aos="slide-up"
-        data-aos-duration="500"
-        className="signup__login-cta"
-      >
-        <span className="signup__login-cta__content">
-          Already have an account? <Link to="/login">Login</Link>
-        </span>
+          <FormGroup
+            id="lastName"
+            name="lastName"
+            inputType="text"
+            value={this.state.lastName}
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+            placeHolder="Last Name"
+            labelIcon={<UserIcon />}
+            autoComplete="last-name"
+            error={this.state.lastNameErrors}
+            required
+          />
+
+          <FormGroup
+            id="email"
+            name="email"
+            inputType="email"
+            value={this.state.email}
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+            placeHolder="Email"
+            labelIcon={<EmailIcon />}
+            autoComplete="email"
+            error={this.state.emailErrors}
+            required
+          />
+
+          <FormGroup
+            id="password"
+            name="password"
+            inputType="password"
+            value={this.state.password}
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+            placeHolder="Password"
+            labelIcon={<LockIcon />}
+            autoComplete="new-password"
+            error={this.state.passwordErrors}
+            required
+          />
+
+          <Button
+            ref={this.submitBtn}
+            text="Sign up"
+            type="submit"
+            isLoading={this.state.isLoading}
+          />
+        </form>
+        <div
+          data-aos="slide-up"
+          data-aos-duration="500"
+          className="signup__login-cta"
+        >
+          <span className="signup__login-cta__content">
+            Already have an account? <Link to="/login">Login</Link>
+          </span>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Signup;

@@ -19,7 +19,7 @@ interface SignupBegin {
   type: typeof SIGNUP_BEGIN;
 }
 
-interface SignupSuccess {
+export interface SignupSuccess {
   type: typeof SIGNUP_SUCCESS;
   data: UserFromBackend;
 }
@@ -38,4 +38,13 @@ export interface AuthState {
   token: string;
 }
 
-export type AuthTypes = SignupBegin | SignupSuccess | LoginSuccess | Logout;
+export interface TestAction {
+  type: 'test';
+}
+
+export type AuthTypes =
+  | SignupBegin
+  | SignupSuccess
+  | LoginSuccess
+  | Logout
+  | TestAction;

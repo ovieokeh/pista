@@ -1,113 +1,167 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { EmailIcon, LockIcon, Checkbox, Button, FormGroup } from '~components';
-import { persistData, toggleButtonLoader } from '~utils';
+import { persistData } from '~utils';
 import { loginRequest } from '~requests';
 import { LOGIN_SUCCESS } from '~reducers/types';
-import { useFormData } from './customHooks';
+import { iProps, iState } from './interfaces';
 import './Login.scss';
 
-interface iProps {
-  dispatch: any;
-}
+class Login extends React.PureComponent<iProps, iState> {
+  submitBtn: React.RefObject<HTMLButtonElement>;
 
-const Login: React.FunctionComponent<iProps> = props => {
-  window.document.title = 'Login to your account - Pista';
-  const submitBtn = React.useRef<HTMLButtonElement>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const {
-    formData,
-    requestErrors,
-    handleInputChange,
-    handleCheckbox,
-    handleErrors
-  } = useFormData();
+  constructor(props: iProps) {
+    super(props);
 
-  const toggleLoadingState = () => {
-    setIsLoading(!isLoading);
+    this.state = {
+      email: '',
+      password: '',
+      emailErrors: '',
+      passwordErrors: '',
+      shouldRemember: false,
+      isLoading: false,
+    };
+
+    this.submitBtn = React.createRef<HTMLButtonElement>();
+  }
+
+  handleInputFocus = (event: React.FocusEvent) => {
+    const target = event.target as HTMLInputElement;
+    this.setState({
+      [`${target.name}Errors`]: '',
+    });
   };
 
-  const handleFormSubmission = async (event: React.FormEvent) => {
-    event.preventDefault();
-    toggleButtonLoader(submitBtn, true, toggleLoadingState);
+  handleInputChange = (event: React.FormEvent) => {
+    const target = event.target as HTMLInputElement;
 
-    const response = await loginRequest(formData);
+    target.id === 'remember'
+      ? this.setState(prevState => ({
+          shouldRemember: !prevState.shouldRemember,
+        }))
+      : this.setState({
+          [target.name]: target.value,
+          emailErrors: '',
+          passwordErrors: '',
+        });
+  };
+
+  toggleSubmitButton = (state: boolean) => {
+    if (this.submitBtn && this.submitBtn.current) {
+      this.submitBtn.current.disabled = state;
+    }
+  };
+
+  handleFormSubmission = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    this.setState({ isLoading: true });
+    this.toggleSubmitButton(true);
+
+    const response = await loginRequest({
+      email: this.state.email,
+      password: this.state.password,
+    });
+
     if (response.status === 'error') {
-      handleErrors(response);
-      toggleButtonLoader(submitBtn, false, setIsLoading);
+      this.handleFormErrors(response);
+      this.toggleSubmitButton(false);
+      this.setState({ isLoading: false });
       return;
     }
 
-    formData.shouldRemember &&
+    this.state.shouldRemember &&
       persistData('auth', {
         user: response.user,
-        token: response.token
+        token: response.token,
       });
 
-    props.dispatch({ type: LOGIN_SUCCESS, data: response });
+    this.props.dispatch({ type: LOGIN_SUCCESS, data: response });
   };
 
-  return (
-    <div className="login">
-      <form
-        data-aos="slide-down"
-        data-aos-duration="300"
-        className="login__form"
-        onSubmit={handleFormSubmission}
-      >
-        <h2 className="login__form__header">Welcome back</h2>
+  handleFormErrors = (response: any) => {
+    if (response.message === 'Invalid login credentials') {
+      this.setState({
+        emailErrors: response.message,
+        passwordErrors: response.message,
+      });
+      return;
+    }
 
-        <FormGroup
-          id="email"
-          name="email"
-          inputType="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeHolder="Email"
-          labelIcon={<EmailIcon />}
-          autoComplete="email"
-          error={requestErrors.email}
-          required
-        />
+    const { data } = response;
 
-        <FormGroup
-          id="password"
-          name="password"
-          inputType="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          placeHolder="Password"
-          labelIcon={<LockIcon />}
-          autoComplete="current-password"
-          error={requestErrors.password}
-          required
-        />
+    for (const err in data) {
+      this.setState({
+        [`${err}Errors`]: data[err].msg,
+      });
+    }
+  };
 
-        <Checkbox
-          id="remember"
-          label="Remember me"
-          checked={formData.shouldRemember}
-          onChange={handleCheckbox}
-        />
+  render() {
+    return (
+      <div className="login">
+        <form
+          data-aos="slide-down"
+          data-aos-duration="300"
+          className="login__form"
+          onSubmit={this.handleFormSubmission}
+        >
+          <h2 className="login__form__header">Welcome back</h2>
 
-        <Button
-          ref={submitBtn}
-          text="Login"
-          type="submit"
-          isLoading={isLoading}
-        />
-      </form>
-      <div
-        data-aos="slide-up"
-        data-aos-duration="500"
-        className="login__signup-cta"
-      >
-        <span className="login__signup-cta__content">
-          New here? <Link to="/signup">Signup</Link>
-        </span>
+          <FormGroup
+            id="email"
+            name="email"
+            inputType="email"
+            value={this.state.email}
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+            placeHolder="Email"
+            labelIcon={<EmailIcon />}
+            autoComplete="email"
+            error={this.state.emailErrors}
+            required
+          />
+
+          <FormGroup
+            id="password"
+            name="password"
+            inputType="password"
+            value={this.state.password}
+            onChange={this.handleInputChange}
+            onFocus={this.handleInputFocus}
+            placeHolder="Password"
+            labelIcon={<LockIcon />}
+            autoComplete="current-password"
+            error={this.state.passwordErrors}
+            required
+          />
+
+          <Checkbox
+            id="remember"
+            label="Remember me"
+            checked={this.state.shouldRemember}
+            onChange={this.handleInputChange}
+          />
+
+          <Button
+            ref={this.submitBtn}
+            text="Login"
+            type="submit"
+            isLoading={this.state.isLoading}
+          />
+        </form>
+        <div
+          data-aos="slide-up"
+          data-aos-duration="500"
+          className="login__signup-cta"
+        >
+          <span className="login__signup-cta__content">
+            New here? <Link to="/signup">Signup</Link>
+          </span>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Login;

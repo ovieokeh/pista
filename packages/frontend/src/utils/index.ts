@@ -1,2 +1,2 @@
 export * from './persistData';
-export * from './toggleButtonLoader';
+export * from './history';

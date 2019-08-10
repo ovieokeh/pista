@@ -16,7 +16,7 @@ function getInitialState() {
   return (
     JSON.parse(localStorage.getItem('auth') as string) || {
       user: null,
-      token: ''
+      token: '',
     }
   );
 }
@@ -24,7 +24,10 @@ function getInitialState() {
 const App: React.FunctionComponent<iProps> = props => {
   const initialAuthState = getInitialState();
   const [auth, dispatch] = React.useReducer(authReducer, initialAuthState);
-  props.AOS.init();
+  props.AOS.init({
+    once: true,
+    offset: 0,
+  });
 
   props.history.listen(() => {
     window.scrollTo(0, 0);

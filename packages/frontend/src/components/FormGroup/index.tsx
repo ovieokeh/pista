@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './FormGroup.scss';
 
-interface iProps {
+export interface iProps {
   id: string;
   name?: string;
   labelIcon: any;
@@ -11,6 +11,7 @@ interface iProps {
   required?: boolean;
   autoComplete: string;
   onChange: (e: React.FormEvent) => void;
+  onFocus?: (e: React.FocusEvent) => void;
   error?: any;
 }
 
@@ -34,6 +35,7 @@ export const FormGroup: React.FunctionComponent<iProps> = (props: iProps) => {
             placeholder={props.placeHolder}
             autoComplete={props.autoComplete}
             onChange={props.onChange}
+            onFocus={props.onFocus}
             required={props.required}
           />
         </div>

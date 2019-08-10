@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import AOS from 'aos';
-import { history } from './history';
+import { history } from './utils';
 import App from './App';
 
 const mountNode = document.querySelector('#mount');

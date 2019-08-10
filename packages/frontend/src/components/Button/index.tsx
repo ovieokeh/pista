@@ -2,7 +2,7 @@ import * as React from 'react';
 import Loader from 'react-loader-spinner';
 import './Button.scss';
 
-interface iProps {
+export interface iProps {
   type: 'button' | 'submit' | 'reset' | undefined;
   text: string;
   isLoading: boolean;
@@ -14,7 +14,7 @@ export const Button = React.forwardRef(
   (props: iProps, ref: React.Ref<HTMLButtonElement>) => (
     <button
       ref={ref}
-      className={`button ${props.extraClasses && props.extraClasses}`}
+      className={`button${props.extraClasses ? ' ' + props.extraClasses : ''}`}
       type={props.type}
       onClick={props.onClick}
     >
@@ -23,5 +23,5 @@ export const Button = React.forwardRef(
       )}
       {props.text}
     </button>
-  )
+  ),
 );
