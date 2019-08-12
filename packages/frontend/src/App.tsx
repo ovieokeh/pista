@@ -4,7 +4,7 @@ import { History } from 'history';
 import { authReducer } from '~reducers';
 import { Navbar } from '~components';
 import { Homepage, Signup, Login, Error, Setup } from './pages';
-import { PublicRoute } from './routes';
+import { PublicRoute, PrivateRoute } from './routes';
 import 'aos/dist/aos.css';
 
 interface iProps {
@@ -41,14 +41,20 @@ const App: React.FunctionComponent<iProps> = props => {
         <PublicRoute
           token={auth.token}
           path="/signup"
-          render={() => <Signup dispatch={dispatch} />}
+          render={() => <Signup history={props.history} dispatch={dispatch} />}
         />
         <PublicRoute
           token={auth.token}
           path="/login"
-          render={() => <Login dispatch={dispatch} />}
+          render={() => <Login history={props.history} dispatch={dispatch} />}
         />
-        <Route path="/setup" component={Setup} />
+        <PrivateRoute
+          token={auth.token}
+          path="/setup"
+          render={() => (
+            <Setup history={props.history} dispatch={dispatch} auth={auth} />
+          )}
+        />
         <Route component={Error} />
       </Switch>
     </Router>

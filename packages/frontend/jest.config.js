@@ -9,6 +9,7 @@ module.exports = {
     '!src/**/index.ts',
     '!src/requests/*.ts',
     '!src/routes/*.**',
+    '!src/utils/persistData.ts',
   ],
   globals: {
     'ts-jest': {

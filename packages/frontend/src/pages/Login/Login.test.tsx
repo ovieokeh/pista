@@ -7,17 +7,19 @@ import Login from '.';
 import { iProps, iState } from './interfaces';
 import { mockedLoginErrors, mockedLoginSuccess } from './fixtures';
 
+jest.useFakeTimers();
 const mockedLoginRequest = jest.spyOn(requests, 'loginRequest');
 const mockedPersistData = jest.spyOn(utils, 'persistData');
 
 describe('Login', () => {
   let wrapper: ReactWrapper<iProps, iState>;
   const dispatch = jest.fn();
+  const history = { push: jest.fn() };
 
   beforeEach(() => {
     wrapper = mount(
       <MemoryRouter>
-        <Login dispatch={dispatch} />
+        <Login history={history as any} dispatch={dispatch} />
       </MemoryRouter>,
     );
   });
@@ -149,7 +151,7 @@ describe('Login', () => {
         });
 
         await instance.handleFormSubmission({ preventDefault } as any);
-
+        jest.runAllTimers();
         expect(preventDefault).toBeCalledTimes(3);
         expect(mockedPersistData).toBeCalledTimes(1);
         expect(dispatch).toBeCalledTimes(1);

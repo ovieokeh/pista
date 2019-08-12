@@ -29,7 +29,9 @@ export class AddBudgetValidator {
       .notEmpty()
       .withMessage('amount field must not be empty')
       .custom((value: string) => !Number.isNaN(+value))
-      .withMessage('amount must be a number');
+      .withMessage('amount must be a number')
+      .custom((val: string) => +val > 9999)
+      .withMessage('amount must be greater than 9999');
   }
 
   static startDate(request: express.Request) {

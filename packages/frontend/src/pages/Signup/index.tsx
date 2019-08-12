@@ -23,9 +23,11 @@ class Signup extends React.PureComponent<iProps, iState> {
       emailErrors: '',
       passwordErrors: '',
       isLoading: false,
+      success: false,
     };
 
     this.submitBtn = React.createRef<HTMLButtonElement>();
+    window.document.title = 'Get started - Pista';
   }
 
   handleInputFocus = (event: React.FocusEvent) => {
@@ -66,12 +68,17 @@ class Signup extends React.PureComponent<iProps, iState> {
       return;
     }
 
+    this.setState({ success: true, isLoading: false });
+
     persistData('auth', {
       user: response.user,
       token: response.token,
     });
 
-    this.props.dispatch({ type: SIGNUP_SUCCESS, data: response });
+    setTimeout(() => {
+      this.props.dispatch({ type: SIGNUP_SUCCESS, data: response });
+      this.props.history.push('/setup');
+    }, 1000);
   };
 
   handleFormErrors = (response: any) => {
@@ -110,6 +117,7 @@ class Signup extends React.PureComponent<iProps, iState> {
             name="firstName"
             inputType="text"
             value={this.state.firstName}
+            success={this.state.success}
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
             placeHolder="First Name"
@@ -124,6 +132,7 @@ class Signup extends React.PureComponent<iProps, iState> {
             name="lastName"
             inputType="text"
             value={this.state.lastName}
+            success={this.state.success}
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
             placeHolder="Last Name"
@@ -138,6 +147,7 @@ class Signup extends React.PureComponent<iProps, iState> {
             name="email"
             inputType="email"
             value={this.state.email}
+            success={this.state.success}
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
             placeHolder="Email"
@@ -152,6 +162,7 @@ class Signup extends React.PureComponent<iProps, iState> {
             name="password"
             inputType="password"
             value={this.state.password}
+            success={this.state.success}
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
             placeHolder="Password"

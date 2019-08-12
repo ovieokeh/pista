@@ -1,0 +1,56 @@
+@import '../../../assets/globals.scss';
+
+.datepicker {
+  position: relative;
+  width: 90%;
+
+  &__error {
+    position: absolute;
+    font-size: 0.8rem;
+    color: $danger-red;
+    padding: 0.25rem 0;
+    margin-bottom: 1rem;
+  }
+
+  .react-datepicker-wrapper {
+    display: block;
+    width: 100%;
+
+    .react-datepicker__input-container {
+      display: block;
+      width: 100%;
+
+      input {
+        display: block;
+        border: 1px solid $very-light-grey;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        color: #999;
+        font-weight: bold;
+        letter-spacing: 1px;
+        width: 100%;
+      }
+    }
+  }
+
+  &--error {
+    .react-datepicker-wrapper {
+      .react-datepicker__input-container {
+        input {
+          border-color: $danger-red;
+          animation: shake 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+      }
+    }
+  }
+
+  &--success {
+    .react-datepicker-wrapper {
+      .react-datepicker__input-container {
+        input {
+          border: 1px solid $primary-green;
+        }
+      }
+    }
+  }
+}

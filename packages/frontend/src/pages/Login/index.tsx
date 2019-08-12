@@ -20,9 +20,11 @@ class Login extends React.PureComponent<iProps, iState> {
       passwordErrors: '',
       shouldRemember: false,
       isLoading: false,
+      success: false,
     };
 
     this.submitBtn = React.createRef<HTMLButtonElement>();
+    window.document.title = 'Log into your account - Pista';
   }
 
   handleInputFocus = (event: React.FocusEvent) => {
@@ -76,7 +78,11 @@ class Login extends React.PureComponent<iProps, iState> {
         token: response.token,
       });
 
-    this.props.dispatch({ type: LOGIN_SUCCESS, data: response });
+    this.setState({ success: true, isLoading: false });
+    setTimeout(() => {
+      this.props.dispatch({ type: LOGIN_SUCCESS, data: response });
+      !response.user.hasPendingBudget && this.props.history.push('/setup');
+    }, 1000);
   };
 
   handleFormErrors = (response: any) => {
@@ -113,6 +119,7 @@ class Login extends React.PureComponent<iProps, iState> {
             name="email"
             inputType="email"
             value={this.state.email}
+            success={this.state.success}
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
             placeHolder="Email"
@@ -127,6 +134,7 @@ class Login extends React.PureComponent<iProps, iState> {
             name="password"
             inputType="password"
             value={this.state.password}
+            success={this.state.success}
             onChange={this.handleInputChange}
             onFocus={this.handleInputFocus}
             placeHolder="Password"

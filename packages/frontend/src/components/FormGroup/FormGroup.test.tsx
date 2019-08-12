@@ -15,6 +15,7 @@ describe('FormGroup', () => {
     onChange: jest.fn(),
     error: '',
     required: false,
+    success: false,
   };
 
   beforeEach(() => {

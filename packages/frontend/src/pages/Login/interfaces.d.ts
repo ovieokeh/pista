@@ -1,5 +1,8 @@
+import { History } from 'history';
+
 export interface iProps {
   dispatch: any;
+  history: History;
 }
 
 export interface iState {
@@ -9,5 +12,6 @@ export interface iState {
   passwordErrors: string;
   shouldRemember: boolean;
   isLoading: boolean;
+  success: boolean;
   [x: string]: any;
 }

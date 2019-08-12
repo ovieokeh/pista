@@ -1,21 +1,32 @@
 @import '../../../assets/globals.scss';
 
+.react-datepicker-popper {
+  z-index: 10000;
+}
+
 .setup {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 97%;
+  min-height: 100vh;
+  padding: 10% 0;
   background-color: $darker-blue;
 
   &__form {
     background-color: #fff;
     min-width: 250px;
-    width: 60%;
-    margin-top: 10%;
+    width: 80%;
     padding: 1rem 5%;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    z-index: 1;
+
+    #amount {
+      color: #999;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
 
     &__header {
       text-transform: uppercase;
@@ -23,6 +34,70 @@
       text-align: center;
       color: #555;
       margin-bottom: 3rem;
+    }
+
+    &__datepickers {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 250px;
+      margin-top: 1%;
+      padding: 1rem 5%;
+
+      &__arrow {
+        display: block;
+        font-size: 1.8rem;
+        color: $very-light-grey;
+        margin: 5% 5% 0 5%;
+      }
+
+      &__title {
+        display: inline-block;
+        font-size: 0.8rem;
+        color: #555;
+        margin-bottom: 0.3rem;
+      }
+    }
+
+    &__button {
+      margin-top: 10%;
+    }
+  }
+
+  &__dashboard-cta {
+    background-color: #f2f2f2;
+    min-width: 250px;
+    width: 80%;
+    padding: 1.5rem 5%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-align: center;
+
+    &__content {
+      color: #666;
+    }
+  }
+}
+
+@media only screen and (max-width: $tablet-bp) {
+  .setup {
+    &__form {
+      &__datepickers {
+        flex-direction: column;
+        min-width: 100%;
+        margin: 1rem auto;
+        padding: 0;
+
+        &__arrow {
+          transform: rotate(90deg);
+          font-size: 1rem;
+          margin: 5% 0;
+        }
+      }
+
+      &__button {
+        margin-top: 25%;
+      }
     }
   }
 }
