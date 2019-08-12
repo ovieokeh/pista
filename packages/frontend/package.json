@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "parcel ./src/index.html",
     "build": "parcel build ./src/index.html",
-    "test": "jest --runInBand --verbose",
-    "unit:test": "npm t -- --coverage"
+    "test": "nyc jest --runInBand --verbose",
+    "coverage": "nyc report --reporter=lcov"
   },
   "keywords": [
     "react",
@@ -54,9 +54,24 @@
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",
     "jest": "^24.8.0",
+    "nyc": "^14.1.1",
     "parcel-bundler": "^1.12.3",
     "sass": "^1.22.9",
     "ts-jest": "^24.0.2",
     "typescript": "3.5.2"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }

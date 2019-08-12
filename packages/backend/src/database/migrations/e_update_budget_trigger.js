@@ -5,8 +5,8 @@ const {
 
 module.exports = {
   up: queryInterface =>
-    queryInterface.sequelize.query(updateBudget).then(() => {
-      queryInterface.sequelize.query(updateBudgetTrigger);
-    }),
+    queryInterface.sequelize
+      .query(updateBudget)
+      .then(() => queryInterface.sequelize.query(updateBudgetTrigger)),
   down: () => ({})
 };

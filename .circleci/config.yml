@@ -1,0 +1,118 @@
+version: 2
+defaults: &defaults
+  environment:
+    NODE_ENV: test
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10.16
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Download cc-test-reporter
+          command: |
+            mkdir -p ~/repo/tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ~/repo/tmp/cc-test-reporter
+            chmod +x ~/repo/tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: .
+          paths:
+            - cc-test-reporter
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  backend-tests:
+    <<: *defaults
+    docker:
+      - image: circleci/postgres:11.3
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+    environment:
+      NODE_ENV: test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Install packages
+          command: cd ./packages/backend && npm install
+      - run:
+          name: Migrate database
+          environment:
+            DATABASE_TEST_USERNAME: root
+            DATABASE_TEST_NAME: circle_test
+            DATABASE_HOST: localhost
+          command: cd ./packages/backend && npm run migrate
+      - run:
+          name: Run backend tests
+          command: cd ./packages/backend && npm test
+      - run:
+          name: Generate coverage
+          command: cd ./packages/backend && npm run coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - codeclimate.backend.json
+
+  frontend-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Install packages
+          command: cd ./packages/frontend && npm install
+      - run:
+          name: Run frontend testss
+          command: cd ./packages/frontend && npm test
+      - run:
+          name: Generate coverage
+          command: cd ./packages/frontend && npm run coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - codeclimate.frontend.json
+
+  upload-coverage:
+    <<: *defaults
+    environment:
+      - CC_TEST_REPORTER_ID: 3e297fe26f02c9cd8fb8ef0bbb1a32ed30cf713c797a4c5c064dbee2bea9f778
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ~/repo/tmp/cc-test-reporter sum-coverage ~/repo/tmp/codeclimate.*.json -p 2 -o ~/repo/tmp/codeclimate.total.json
+            ~/repo/tmp/cc-test-reporter upload-coverage -i ~/repo/tmp/codeclimate.total.json
+
+workflows:
+  version: 2
+
+  commit:
+    jobs:
+      - build
+      - backend-tests:
+          requires:
+            - build
+      - frontend-tests:
+          requires:
+            - build
+      - upload-coverage:
+          requires:
+            - backend-tests
+            - frontend-tests

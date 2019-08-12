@@ -10,7 +10,7 @@ const config = {
     logging: false
   },
   test: {
-    username: process.env.DATABASE_USERNAME,
+    username: process.env.DATABASE_TEST_USERNAME,
     password: null,
     database: process.env.DATABASE_TEST_NAME,
     host: process.env.DATABASE_HOST,

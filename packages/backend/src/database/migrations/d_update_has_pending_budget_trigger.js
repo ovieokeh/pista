@@ -5,8 +5,8 @@ const {
 
 module.exports = {
   up: queryInterface =>
-    queryInterface.sequelize.query(hasPendingBudget).then(() => {
-      queryInterface.sequelize.query(hasPendingBudgetTrigger);
-    }),
+    queryInterface.sequelize
+      .query(hasPendingBudget)
+      .then(() => queryInterface.sequelize.query(hasPendingBudgetTrigger)),
   down: () => ({})
 };
