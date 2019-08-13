@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "parcel ./src/index.html",
     "build": "parcel build ./src/index.html",
-    "test": "nyc jest --runInBand --verbose",
-    "coverage": "nyc report --reporter=lcov"
+    "test": "jest --runInBand --verbose"
   },
   "keywords": [
     "react",

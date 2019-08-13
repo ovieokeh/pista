@@ -9,8 +9,7 @@
     "dev": "export NODE_ENV=development && ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/server.ts",
     "migrate": "$(npm bin)/sequelize db:migrate",
     "migrate:undo": "$(npm bin)/sequelize db:migrate:undo",
-    "test": "export NODE_ENV=test && nyc mocha --exit -r ts-node/register src/**/*.spec.ts",
-    "coverage": "nyc report --reporter=lcov"
+    "test": "export NODE_ENV=test && nyc mocha --exit -r ts-node/register src/**/*.spec.ts"
   },
   "keywords": [
     "node.js",
